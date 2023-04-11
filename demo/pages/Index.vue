@@ -13,21 +13,18 @@
       @keydown="onkeydown"
     />
 
-    <br><br>
+    <br /><br />
     <h1>Preview</h1>
-    <hr>
+    <hr />
 
-    <div
-      class="tiptap-vuetify-editor__content"
-      v-html="content"
-    />
+    <div class="tiptap-vuetify-editor__content" v-html="content" />
   </div>
 </template>
 
 <script>
-import { MAIN_MODULE } from '../config'
-import MyCustomExtension from '../MyCustomExtension'
-import FileSelector from '../Components/FileSelector'
+import { MAIN_MODULE } from "../config";
+import MyCustomExtension from "../MyCustomExtension";
+import FileSelector from "../Components/FileSelector";
 
 export default {
   components: {
@@ -80,29 +77,69 @@ export default {
       </table>
     `
   }),
-  async created () {
+  async created() {
     const {
-      Heading, Bold, Italic, Strike, Underline, Code, CodeBlock, Paragraph, BulletList, OrderedList, ListItem,
-      Link, Blockquote, HardBreak, HorizontalRule, History, Image, TodoList, TodoItem, Table, TableCell, TableHeader,
-      TableRow
-    } = await MAIN_MODULE
+      Heading,
+      Bold,
+      Italic,
+      Strike,
+      Underline,
+      Code,
+      CodeBlock,
+      Paragraph,
+      BulletList,
+      OrderedList,
+      ListItem,
+      Link,
+      Blockquote,
+      HardBreak,
+      HorizontalRule,
+      History,
+      Image,
+      TodoList,
+      TodoItem,
+      Table,
+      TableCell,
+      TableHeader,
+      TableRow,
+      Snippets
+    } = await MAIN_MODULE;
 
     this.extensions = [
       MyCustomExtension,
-      [Table, {
-        options: {
-          resizable: true
+      [
+        Snippets,
+        {
+          options: {
+            list: [
+              {
+                title: "Item 1",
+                value: "lorem ipsum dolor sit amet"
+              }
+            ]
+          }
         }
-      }],
+      ],
+      [
+        Table,
+        {
+          options: {
+            resizable: true
+          }
+        }
+      ],
       TableCell,
       TableHeader,
       TodoList,
       TableRow,
-      [TodoItem, {
-        options: {
-          nested: true
+      [
+        TodoItem,
+        {
+          options: {
+            nested: true
+          }
         }
-      }],
+      ],
       Code,
       CodeBlock,
       HorizontalRule,
@@ -115,36 +152,51 @@ export default {
       ListItem, // если нужно использовать список (BulletList, OrderedList)
       BulletList,
       OrderedList,
-      [Image, {
-        options: {
-          imageSources: [{ component: FileSelector, name: 'File Selector' }]
+      [
+        Image,
+        {
+          options: {
+            imageSources: [{ component: FileSelector, name: "File Selector" }]
+          }
         }
-      }],
-      [Heading, {
-        // Опции которые попадают в расширение tiptap
-        options: {
-          levels: [1, 2, 3]
+      ],
+      [
+        Heading,
+        {
+          // Опции которые попадают в расширение tiptap
+          options: {
+            levels: [1, 2, 3]
+          }
         }
-      }],
+      ],
       // но опции не обязательно указывать если нужно чтобы renderIn: 'toolbar', это по умолчанию.
-      [Bold, {
-        renderIn: 'toolbar'
-      }],
-      [Blockquote, {
-        renderIn: 'bubbleMenu',
-        options: {
-          levels: [1, 2, 3]
+      [
+        Bold,
+        {
+          renderIn: "toolbar"
         }
-      }],
-      [Link, {
-        renderIn: 'bubbleMenu'
-      }]
-    ]
+      ],
+      [
+        Blockquote,
+        {
+          renderIn: "bubbleMenu",
+          options: {
+            levels: [1, 2, 3]
+          }
+        }
+      ],
+      [
+        Link,
+        {
+          renderIn: "bubbleMenu"
+        }
+      ]
+    ];
   },
   methods: {
-    onkeydown (event) {
+    onkeydown(event) {
       // console.log('event', event.key)
     }
   }
-}
+};
 </script>
