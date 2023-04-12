@@ -114,7 +114,8 @@ export default {
             list: [
               {
                 title: "Item 1",
-                value: "lorem ipsum dolor sit amet"
+                content: "lorem ipsum dolor sit amet",
+                onClick: this.appendContent
               }
             ]
           }
@@ -196,6 +197,11 @@ export default {
   methods: {
     onkeydown(event) {
       // console.log('event', event.key)
+    },
+    appendContent({ editor, content }) {
+      const { size } = editor.view.state.doc.content;
+      const transaction = editor.state.tr.insertText(content, size);
+      editor.view.dispatch(transaction);
     }
   }
 };

@@ -18,13 +18,7 @@ export default class Snippets extends AbstractExtension {
             [VuetifyIconsGroups.fa]: new VuetifyIcon('fas fa-menu'),
             [VuetifyIconsGroups.mdi]: new VuetifyIcon('mdi-content-paste')
           },
-          list: this.options.list.map(({title, value}) => ({
-            title,
-            onClick: ({ editor }) => {
-              const transaction = editor.state.tr.insertText(value)
-              editor.view.dispatch(transaction)
-            }
-          })),
+          list: this.options.list
         })
       }
     ]

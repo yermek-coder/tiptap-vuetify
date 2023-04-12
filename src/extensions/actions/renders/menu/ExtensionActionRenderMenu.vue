@@ -28,7 +28,8 @@
           @click="
             item.onClick({
               context: $props[PROPS.CONTEXT],
-              editor: $props[PROPS.EDITOR]
+              editor: $props[PROPS.EDITOR],
+              content: item.content
             })
           "
           >{{ item.title }}</v-list-item-title

@@ -8,9 +8,11 @@ export default interface ExtensionActionRenderMenuOptionsInterface {
   }>
   list: {
     title: string,
-    onClick: ({ context, editor }: {
+    content: string,
+    onClick: ({ context, editor, content }: {
         context: any
-        editor: Editor
+        editor: Editor,
+        content: string
       }) => any
   }[]
   onClickOptions?: { [key: string]: any }
