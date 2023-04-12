@@ -1,26 +1,33 @@
 <template>
   <v-menu offset-y>
     <!--:disabled="isButtonDisabled(commands, button)"-->
-    <template #activator="{ on }">
+    <template #activator="vmenuScopeSlot">
       <!--TODO options.isActive сделать реактивным -->
-      <v-btn
-        :disabled="disabled"
-        :class="{
-          'tiptap-vuetify-editor__action-render-btn': true,
-          'v-btn--active': $props[PROPS.OPTIONS].isActive($props[PROPS.CONTEXT])
-        }"
-        :dark="$props[PROPS.DARK]"
-        small
-        icon
-        v-on="on"
-      >
-        <component
-          :is="isTextIcon ? 'b' : isVuetifyIcon ? 'v-icon' : null"
-          class="tiptap-vuetify-editor__btn-icon"
-        >
-          {{ buttonIcon }}
-        </component>
-      </v-btn>
+      <v-tooltip>
+        <template #activator="vtooltipScopeSlot">
+          <v-btn
+            :disabled="disabled"
+            :class="{
+              'tiptap-vuetify-editor__action-render-btn': true,
+              'v-btn--active': $props[PROPS.OPTIONS].isActive(
+                $props[PROPS.CONTEXT]
+              )
+            }"
+            :dark="$props[PROPS.DARK]"
+            small
+            icon
+            v-on="mergeVOns(vtooltipScopeSlot, vmenuScopeSlot)"
+          >
+            <component
+              :is="isTextIcon ? 'b' : isVuetifyIcon ? 'v-icon' : null"
+              class="tiptap-vuetify-editor__btn-icon"
+            >
+              {{ buttonIcon }}
+            </component>
+          </v-btn>
+        </template>
+        <span>{{ tooltipText }}</span>
+      </v-tooltip>
     </template>
     <v-list>
       <v-list-item v-for="(item, index) in options.list" :key="index">
@@ -53,7 +60,8 @@ import {
   VMenu,
   VList,
   VListItemTitle,
-  VListItem
+  VListItem,
+  VTooltip
 } from "vuetify/lib";
 import ConsoleLogger from "~/logging/ConsoleLogger";
 
@@ -67,7 +75,7 @@ export const PROPS = {
 };
 
 @Component({
-  components: { VBtn, VIcon, VMenu, VList, VListItemTitle, VListItem }
+  components: { VBtn, VIcon, VMenu, VList, VListItemTitle, VListItem, VTooltip }
 })
 export default class ExtensionActionRenderMenu extends Vue {
   @Prop({ type: Boolean, default: false })
@@ -115,6 +123,17 @@ export default class ExtensionActionRenderMenu extends Vue {
     }
 
     return source;
+  }
+
+  mergeVOns(vtooltip, vmenu) {
+    return {
+      ...vtooltip.on,
+      ...vmenu.on,
+      keydown: event => {
+        vtooltip.on.keydown(event);
+        vmenu.on.keydown(event);
+      }
+    };
   }
 }
 </script>

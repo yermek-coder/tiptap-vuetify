@@ -18,7 +18,8 @@ export default class Snippets extends AbstractExtension {
             [VuetifyIconsGroups.fa]: new VuetifyIcon('fas fa-menu'),
             [VuetifyIconsGroups.mdi]: new VuetifyIcon('mdi-content-paste')
           },
-          list: this.options.list
+          list: this.options.list,
+          tooltip: this.options.tooltip,
         })
       }
     ]

@@ -6,13 +6,14 @@ export default interface ExtensionActionRenderMenuOptionsInterface {
   icons: Partial<{
     [key in keyof typeof VuetifyIconsGroups]: IconInterface
   }>
+  tooltip: string,
   list: {
     title: string,
     content: string,
     onClick: ({ context, editor, content }: {
         context: any
         editor: Editor,
-        content: string
+        content: string,
       }) => any
   }[]
   onClickOptions?: { [key: string]: any }

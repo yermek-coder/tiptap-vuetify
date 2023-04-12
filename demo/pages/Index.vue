@@ -117,7 +117,8 @@ export default {
                 content: "lorem ipsum dolor sit amet",
                 onClick: this.appendContent
               }
-            ]
+            ],
+            tooltip: "Paste some snippets"
           }
         }
       ],
