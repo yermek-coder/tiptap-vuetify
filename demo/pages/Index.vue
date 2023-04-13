@@ -6,7 +6,16 @@
     :editor-properties="editorProperties"
     output-format="json"
    -->
+    <div>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
+      blanditiis quis. Modi dolores nam corporis. Necessitatibus facere quae,
+      illo distinctio earum, iure nihil tempore odit sunt ipsa et atque cumque.
+    </div>
+    <br />
+    <br />
+    <br />
     <tiptap-vuetify
+      id="some-id"
       v-model="content"
       :extensions="extensions"
       placeholder="Write something …"
@@ -113,12 +122,13 @@ export default {
           options: {
             list: [
               {
-                title: "Item 1",
+                title: "Generate ideas",
                 content: "lorem ipsum dolor sit amet",
                 onClick: this.appendContent
               }
             ],
-            tooltip: "Paste some snippets"
+            tooltip: "Paste some snippets",
+            iconSrc: require("~/assets/ai-blue.jpg")
           }
         }
       ],
@@ -199,10 +209,21 @@ export default {
     onkeydown(event) {
       // console.log('event', event.key)
     },
-    appendContent({ editor, content }) {
-      const { size } = editor.view.state.doc.content;
-      const transaction = editor.state.tr.insertText(content, size);
-      editor.view.dispatch(transaction);
+    appendContent({ editor }) {
+      const words = "lorem ipsum dolor sit amet".split(" ");
+      words.forEach((word, index) => {
+        const { size } = editor.view.state.doc.content;
+        const transaction = editor.state.tr.insertText(
+          " " + word,
+          size - (index === 0 ? 0 : 1)
+        );
+        editor.view.dispatch(transaction);
+      });
+
+      // the ID
+      const editorEl = editor.view.dom;
+      const ID = editorEl.closest(".tiptap-vuetify-editor").getAttribute("id");
+      console.log("ID", ID);
     }
   }
 };

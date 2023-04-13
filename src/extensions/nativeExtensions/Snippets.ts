@@ -20,6 +20,7 @@ export default class Snippets extends AbstractExtension {
           },
           list: this.options.list,
           tooltip: this.options.tooltip,
+          iconSrc: this.options.iconSrc,
         })
       }
     ]

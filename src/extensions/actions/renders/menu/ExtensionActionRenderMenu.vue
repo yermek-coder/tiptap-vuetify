@@ -3,7 +3,7 @@
     <!--:disabled="isButtonDisabled(commands, button)"-->
     <template #activator="vmenuScopeSlot">
       <!--TODO options.isActive сделать реактивным -->
-      <v-tooltip>
+      <v-tooltip top>
         <template #activator="vtooltipScopeSlot">
           <v-btn
             :disabled="disabled"
@@ -18,19 +18,20 @@
             icon
             v-on="mergeVOns(vtooltipScopeSlot, vmenuScopeSlot)"
           >
-            <component
+            <!-- <component
               :is="isTextIcon ? 'b' : isVuetifyIcon ? 'v-icon' : null"
               class="tiptap-vuetify-editor__btn-icon"
             >
               {{ buttonIcon }}
-            </component>
+            </component> -->
+            <v-img width="16" :src="options.iconSrc"></v-img>
           </v-btn>
         </template>
         <span>{{ tooltipText }}</span>
       </v-tooltip>
     </template>
     <v-list>
-      <v-list-item v-for="(item, index) in options.list" :key="index">
+      <v-list-item v-for="(item, index) in options.list" :key="index" link>
         <v-list-item-title
           @click="
             item.onClick({
@@ -61,7 +62,8 @@ import {
   VList,
   VListItemTitle,
   VListItem,
-  VTooltip
+  VTooltip,
+  VImg
 } from "vuetify/lib";
 import ConsoleLogger from "~/logging/ConsoleLogger";
 
@@ -75,7 +77,16 @@ export const PROPS = {
 };
 
 @Component({
-  components: { VBtn, VIcon, VMenu, VList, VListItemTitle, VListItem, VTooltip }
+  components: {
+    VBtn,
+    VIcon,
+    VMenu,
+    VList,
+    VListItemTitle,
+    VListItem,
+    VTooltip,
+    VImg
+  }
 })
 export default class ExtensionActionRenderMenu extends Vue {
   @Prop({ type: Boolean, default: false })

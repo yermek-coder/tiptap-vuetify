@@ -7,6 +7,7 @@ export default interface ExtensionActionRenderMenuOptionsInterface {
     [key in keyof typeof VuetifyIconsGroups]: IconInterface
   }>
   tooltip: string,
+  iconSrc: string,
   list: {
     title: string,
     content: string,
