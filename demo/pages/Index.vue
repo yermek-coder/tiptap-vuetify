@@ -210,14 +210,20 @@ export default {
       // console.log('event', event.key)
     },
     appendContent({ editor }) {
-      const words = "lorem ipsum dolor sit amet".split(" ");
+      const words = "1. apple\n2. orange\n3. grape".split(" ");
       words.forEach((word, index) => {
-        const { size } = editor.view.state.doc.content;
-        const transaction = editor.state.tr.insertText(
-          " " + word,
-          size - (index === 0 ? 0 : 1)
-        );
-        editor.view.dispatch(transaction);
+        if (word.includes("\n")) {
+          word = word.replace("\n", "<br>");
+        }
+        const firstWord = index === 0;
+        let content = editor.getHTML();
+        if (!firstWord) {
+          // without this new p tag will be created each time we insert,
+          // but we only need it once
+          content = content.substring(0, content.length - 4);
+        }
+
+        editor.setContent(content + (firstWord ? "" : " ") + word);
       });
 
       // the ID
