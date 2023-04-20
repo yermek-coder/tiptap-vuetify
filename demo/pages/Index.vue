@@ -215,11 +215,11 @@ export default {
         if (word.includes("\n")) {
           word = word.replace("\n", "<br>");
         }
-        const firstWord = index === 0;
         let content = editor.getHTML();
-        if (!firstWord) {
+        if (index !== 0) {
+          // insert new content inside last paragraph if one exists.
           // without this new p tag will be created each time we insert,
-          // but we only need it once
+          // but we only need it once.
           content = content.substring(0, content.length - 4);
         }
 
